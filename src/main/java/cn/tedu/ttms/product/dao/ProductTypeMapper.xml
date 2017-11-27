@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.ttms.product.dao.ProductTypeDao">
+		<select id="findTreeGridNodes" resultType="map">
+			select c.*,p.name parentName
+			from tms_classes c left join tms_classes p
+			on c.parentId=p.id
+			
+			<!-- 
+			 select c.*,(select p.name parentName
+					from tms_classes p
+					where c.parentId=p.id
+			)
+			from tms_classes c
+			 -->
+		</select>
+		<select id="hasChilds" resultType="int">
+			select count(*)
+			from tms_classes t
+			where t.parentId=#{id}
+		</select>
+		<delete id="deleteById">
+			delete 
+			from tms_classes
+			where id=#{id}
+		</delete>
+		<select id="findZtreeNodes" resultType="cn.tedu.ttms.common.vo.Node">
+			select id,name,parentId
+			from tms_classes
+		</select>
+		<insert id="saveObject">
+			insert into tms_classes
+         	(id,name,sort,parentId,note,createdTime,modifiedTime,
+         	createdUser,modifiedUser)
+         	values
+         	(#{id},#{name},#{sort},#{parentId},#{note},
+        	NOW(),NOW(),#{createdUser},#{modifiedUser})
+		</insert>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

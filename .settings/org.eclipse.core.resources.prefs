@@ -1,0 +1,11 @@
+eclipse.preferences.version=1
+encoding//src/main/java/cn/tedu/ttms/common/exception=UTF-8
+encoding//src/main/java/cn/tedu/ttms/common/web=UTF-8
+encoding//src/main/java/cn/tedu/ttms/common/web/JsonDateTypeConvert.java=UTF-8
+encoding//src/main/java/cn/tedu/ttms/product/controller/ProjectController.java=GBK
+encoding//src/main/java/cn/tedu/ttms/product/controller/example/debug/TestDebug.java=GBK
+encoding//src/main/java/cn/tedu/ttms/product/dao/ProjectDAO.java=GBK
+encoding//src/main/java/cn/tedu/ttms/product/service/ProjectService.java=GBK
+encoding//src/main/java/cn/tedu/ttms/product/service/impl/ProjectServiceImpl.java=GBK
+encoding//src/test/java/beans/product/TestProjectService.java=GBK
+encoding/<project>=UTF-8

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.ttms.product.dao.ProjectDAO">
+	<!-- 抽取where元素的内容 -->
+	<sql id="where">
+		<where>
+			<if test="name!=null and name!=''">
+				name like concat("%",#{name},"%") 
+			</if>
+			<if test="valid!=null">
+				and valid=#{valid}
+			</if>
+		</where>
+	</sql>
+	
+	<update id="validById">
+		update tms_projects
+		set valid=#{valid}
+		where id in 
+		<!-- (1,2,3) -->
+		<foreach collection="ids" open="(" close=")"
+					separator="," item="item">
+			#{item}
+		</foreach>
+	</update>
+	<!-- 查询表中所有数据 -->
+	<select id="findObjects"
+	resultType="cn.tedu.ttms.product.entity.Project">
+		select * from tms_projects
+		order by createdTime desc
+	</select>
+	<!-- 
+	1）resultType后面的值如何使用别名替换
+		在mybatis-config配置文件中的typeAliases配置package name
+		
+	2）#的作用是什么？能否使用$替换？两者有什么不同？
+		
+	
+	3）排序时的createdTime是否可以是一个动态字段？
+	 -->
+	<select id="findPageObjects" 
+	resultType="cn.tedu.ttms.product.entity.Project">
+		select * from tms_projects
+		<include refid="where"/>
+		order by createdTime desc
+		limit #{startIndex},#{pageSize}
+	</select>
+	<!-- resultType后的int是否可以修改为Integer，这个Integer是否可以大写。 -->
+	<select id="getRowCount" resultType="int">
+		select count(*) from tms_projects
+	<include refid="where"/>
+	</select>
+	<insert id="saveObject">
+		insert into tms_projects
+		(name,code,beginDate,endDate,valid,note,createdTime,modifiedTime,createdUser,modifiedUser)
+		values
+		(#{name},#{code},#{beginDate},#{endDate},#{valid},#{note},now(),now(),#{createdUser},#{modifiedUser})	
+	</insert>
+	<select id="findObjectById" resultType="cn.tedu.ttms.product.entity.Project"
+							parameterType="int">
+		select *
+		from tms_projects
+		where id=#{id}
+	</select>
+	<update id="updateObject">
+		update tms_projects
+		set 
+		name=#{name},code=#{code},
+		beginDate=#{beginDate},
+		endDate=#{endDate},valid=#{valid},
+		note=#{note}
+		where id=#{id}
+	</update>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
